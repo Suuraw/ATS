@@ -3,7 +3,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs/promises"; // Use Promises for async file operations
 import processResume from "./controller/process.js";
-
+import { formatData } from "./scripts/formatData.js";
 const app = express();
 const port = 3000;
 
@@ -11,13 +11,15 @@ const port = 3000;
 const upload = multer({ dest: "uploads/" });
 // clear all the files from the uploads folder
 const clearUploadsFolder = async () => {
-    try {
-      const files = await fs.readdir("uploads");
-      await Promise.all(files.map((file) => fs.unlink(path.join("uploads", file))));
-    } catch (error) {
-      console.error("Error clearing uploads folder:", error);
-    }
-  };
+  try {
+    const files = await fs.readdir("uploads");
+    await Promise.all(
+      files.map((file) => fs.unlink(path.join("uploads", file)))
+    );
+  } catch (error) {
+    console.error("Error clearing uploads folder:", error);
+  }
+};
 // API endpoint for uploading resume
 app.post("/upload", upload.single("resume"), async (req, res) => {
   if (!req.file) {
@@ -37,7 +39,8 @@ app.post("/upload", upload.single("resume"), async (req, res) => {
     // Delete file after processing
     await fs.unlink(newFilePath);
     await clearUploadsFolder();
-    res.json({ extractedText });
+    const formattedData = await formatData(extractedText);
+    res.json({ formattedData });
   } catch (error) {
     res.status(500).json({ error: error.message || "Error processing resume" });
   }
