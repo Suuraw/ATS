@@ -4,6 +4,7 @@ import path from "path";
 import fs from "fs/promises"; // Use Promises for async file operations
 import processResume from "./controller/process.js";
 import { formatData } from "./scripts/formatData.js";
+import { captureGoogleFormScreenshot } from "./scripts/getFormFields.js";
 const app = express();
 const port = 3000;
 
@@ -21,6 +22,7 @@ const clearUploadsFolder = async () => {
   }
 };
 // API endpoint for uploading resume
+await captureGoogleFormScreenshot();
 app.post("/upload", upload.single("resume"), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
