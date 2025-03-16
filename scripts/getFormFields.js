@@ -1,43 +1,47 @@
-import puppeteer from "puppeteer";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
+import dotenv from "dotenv";
 
-// Get root directory path (assuming this script is inside "scripts/")
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const rootDir = path.resolve(__dirname, ".."); // Move up to root directory
+dotenv.config();
+let fields;
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// Function to capture Google Form screenshot
-export const captureGoogleFormScreenshot = async (
-  formUrl,
-  filename = "form_screenshot.png"
-) => {
+// Converts local file to base64 for Gemini AI
+function fileToGenerativePart(filePath, mimeType) {
+  return {
+    inlineData: {
+      data: Buffer.from(fs.readFileSync(filePath)).toString("base64"),
+      mimeType,
+    },
+  };
+}
+
+async function processScreenshot() {
   try {
-    // Set uploads directory to the root folder
-    const uploadDir = path.join(rootDir, "uploads");
+    // Define the screenshot path (ensure it's from the correct uploads folder)
+    const screenshotPath = path.resolve("uploads", "form_screenshot.png");
 
-    // Ensure "uploads" folder exists in root
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+    // Ensure the file exists before processing
+    if (!fs.existsSync(screenshotPath)) {
+      throw new Error(`File not found: ${screenshotPath}`);
     }
 
-    // Launch headless browser
-    const browser = await puppeteer.launch({ headless: true });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
-    // Open a new page
-    const page = await browser.newPage();
-    await page.goto(formUrl, { waitUntil: "networkidle2" });
+    const prompt = `Extract all form field names which are associated with Your answer or other input fields from the image.
+      THE RESPONSE SHOULD NOT CONTAIN ANY ASTERIKS
+      `;
 
-    // Save screenshot in root "uploads" folder
-    const savePath = path.join(uploadDir, filename);
-    await page.screenshot({ path: savePath, fullPage: true });
+    const imagePart = fileToGenerativePart(screenshotPath, "image/png");
 
-    console.log(`✅ Screenshot saved at: ${savePath}`);
-
-    // Close browser
-    await browser.close();
+    const generatedContent = await model.generateContent([prompt, imagePart]);
+    fields = generatedContent.response.text();
+    await fs.writeFileSync("uploads/requiredJobFields.txt", fields);
   } catch (error) {
-    console.error("❌ Error capturing screenshot:", error);
+    console.error("❌ Error processing image:", error);
   }
-};
+}
+
+export default processScreenshot;
+export { fields };

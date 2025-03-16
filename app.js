@@ -4,14 +4,15 @@ import path from "path";
 import fs from "fs/promises"; // Use Promises for async file operations
 import processResume from "./middleware/process.js";
 import { formatData } from "./scripts/formatData.js";
-import { captureGoogleFormScreenshot } from "./scripts/getFormFields.js";
+import { captureGoogleFormScreenshot } from "./scripts/takeFormSnap.js";
+import processScreenshot from "./scripts/getFormFields.js";
+import { processResumeDataWithRequiredField } from "./scripts/processJobFieldsAndResumeData.js";
 const app = express();
 const port = 3000;
 
 // Multer setup for file uploads
 const upload = multer({ dest: "uploads/" });
-// clear all the files from the uploads folder
-const clearUploadsFolder = async () => {
+export const clearUploadsFolder = async () => {
   try {
     const files = await fs.readdir("uploads");
     await Promise.all(
@@ -28,6 +29,7 @@ app.post("/job_form", async (req, res) => {
   console.log(formUrl);
   try {
     await captureGoogleFormScreenshot(formUrl);
+    await processScreenshot();
     res.status(200).json({ message: "✅ Screenshot saved" });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -40,7 +42,6 @@ app.post("/upload", upload.single("resume"), async (req, res) => {
   }
 
   try {
-    // Get original extension
     const fileExt = path.extname(req.file.originalname);
     const newFilePath = `${req.file.path}${fileExt}`;
 
@@ -50,15 +51,14 @@ app.post("/upload", upload.single("resume"), async (req, res) => {
 
     await fs.writeFile("output.txt", extractedText);
     // Delete file after processing
-    await fs.unlink(newFilePath);
-    await clearUploadsFolder();
     const formattedData = await formatData(extractedText);
     res.json({ formattedData });
   } catch (error) {
     res.status(500).json({ error: error.message || "Error processing resume" });
   }
 });
-
+//API endpoint for processing resume Data with fields
+app.post("/processData",processResumeDataWithRequiredField);
 // Start the server
 app.listen(port, () =>
   console.log(`Server running on http://localhost:${port}`)
