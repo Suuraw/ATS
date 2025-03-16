@@ -1,0 +1,48 @@
+Sujay Kumar
+(cid:131)825-200-7918 � #sujayraw13@gmail.com � (cid:239)linkedin.com/in/sujay-kumar-4b85b5252 � �github.com/Suuraw
+Summary �ComputerSciencestudentskilledinFullStackDevelopment(MERNStack)andDevOps. Proficientin
+JavaScript,React.js,Node.js,andtoolslikeGitandCloudflare,aimingtodeliverscalable,innovativesoftwaresolutions.
+Skills
+Languages C,Java,JavaScript,TypeScript,Python Databases&Tools MongoDB,PostgreSQL,Firebase,Supabase,
+WebDevelopment HTML,CSS,TailwindCSS,React.js,Next.js, Prisma,Postman
+Node.js,Express.js,RESTfullAPIs DevOps/Cloud Git,GitHub,GCP,Cloudflare
+Experience
+KIITE-Cell,Bhubaneswar,Odisha Sep2024�Present
+WebDevelopmentIntern
+� BuiltacoursedashboardwithMERNStack,improvingonboardingefficiencyandreducingusersetuptimefrom15to
+10minutes
+� IntegratedReact.jsfrontendwithNode.js/MongoDBbackendandGoogleSheetAPI,automatingleaderboardupdates
+andcuttingmanualdataentryby40%
+� Optimizedapplicationperformancebydebuggingandreducingloadtimes,enhancinguserexperiencefor100+active
+users
+BanaoTechnologies,Remote 2024�Present
+FullStackDeveloper
+� DevelopedcustomUIcomponentswithLiquidcode,boostingpageresponsivenessby25%across10+clientprojects
+� Fixed15+UIbugs,improvingsystemuptimeby20%andenhancingcodequalityforseamlessdeployments
+� AddedscalablefeaturesusingNode.jsandReact.js,increasingapplicationcapacitytohandle50%moreconcurrent
+users
+Education
+KIITUniversity,Bhubaneswar,Odisha
+B.TechinComputerScienceandEngineering
+ExpectedGraduation: June2026 CGPA:8.00
+Projects
+ToDoAgent 2023
+� Developedaprompt-basedtaskassignmenttoolwithMERNStack
+� WorkingonWhatsApp/emailnotificationsusingNode.jsforreal-timeupdatesonassignedtasks
+� DeployedonVercelforscalability(todoagent.vercel.app)
+NoteNinja 2024
+� BuiltafastUIwithReact.jsandbackendwithNode.js
+� Designedfortext/audiosummarizationwithoptimizedprocessing
+� Accessibleatnote-audio-ninja.vercel.app
+EventEase 2024
+� DevelopedaneventplatformwithVite/ReactandTailwindCSS
+� Ensuredresponsivefrontenddesignforbetteruserexperience
+� Liveateventease-frontend.pages.dev
+E-CellCohortWebsite 2024
+� IntegratedMERNStackwithreal-timeupdates,increasingengagementby20%
+� Deployedatecohort.vercel.app
+Activities
+NationalLevelBasketballPlayer
+� Representedstateandcollegeatnational-levelcompetitions
+SmartIndiaHackathon(SIH)2024 2024
+� Selectedamongthetop50teamsfrommyCollege
