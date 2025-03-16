@@ -10,7 +10,7 @@ const rootDir = path.resolve(__dirname, ".."); // Move up to root directory
 
 // Function to capture Google Form screenshot
 export const captureGoogleFormScreenshot = async (
-  formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfKrOWP3k6IhquHOD-RvvwoTw7rbRlx9XbWrFIpUh7prabR3g/viewform?usp=sharing",
+  formUrl,
   filename = "form_screenshot.png"
 ) => {
   try {

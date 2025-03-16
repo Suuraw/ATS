@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs/promises"; // Use Promises for async file operations
-import processResume from "./controller/process.js";
+import processResume from "./middleware/process.js";
 import { formatData } from "./scripts/formatData.js";
 import { captureGoogleFormScreenshot } from "./scripts/getFormFields.js";
 const app = express();
@@ -21,8 +21,19 @@ const clearUploadsFolder = async () => {
     console.error("Error clearing uploads folder:", error);
   }
 };
+// API endpoint for taking a screenshot and saving to the uploads folder
+app.use(express.urlencoded({ extended: true }));
+app.post("/job_form", async (req, res) => {
+  const { formUrl } = req.body;
+  console.log(formUrl);
+  try {
+    await captureGoogleFormScreenshot(formUrl);
+    res.status(200).json({ message: "✅ Screenshot saved" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 // API endpoint for uploading resume
-await captureGoogleFormScreenshot();
 app.post("/upload", upload.single("resume"), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
