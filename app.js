@@ -7,7 +7,7 @@ import { formatData } from "./scripts/formatData.js";
 import { captureGoogleFormScreenshot } from "./scripts/takeFormSnap.js";
 import processScreenshot from "./scripts/getFormFields.js";
 import { processResumeDataWithRequiredField } from "./scripts/processJobFieldsAndResumeData.js";
-import { suggestImprovement } from "./scripts/suggestResumeImprovement.js";
+import { atsScore } from "./scripts/atsScore.js";
 const app = express();
 const port = 3000;
 // Middleware for handling JSON data
@@ -63,7 +63,7 @@ app.post("/upload", upload.single("resume"), async (req, res) => {
 //API endpoint for processing resume Data with fields
 app.post("/processData",processResumeDataWithRequiredField);
 //API endpoint for calculating the ATS score
-app.post("/atsScore",suggestImprovement);
+app.post("/atsScore",atsScore);
 // Start the server
 app.listen(port, () =>
   console.log(`Server running on http://localhost:${port}`)
