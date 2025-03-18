@@ -1,0 +1,68 @@
+Sujay Kumar
+825-200-7918
+sujayraw13@gmail.com
+linkedin.com/in/sujay-kumar-4b85b5252
+github.com/Suuraw
+
+Summary
+
+Computer Science student skilled in Full Stack Development (MERN Stack) and DevOps. Proficient in JavaScript, React.js, Node.js, and tools like Git and Cloudflare, aiming to deliver scalable, innovative software solutions.
+
+Skills
+
+Languages: C, Java, JavaScript, TypeScript, Python
+Databases & Tools: MongoDB, PostgreSQL, Firebase, Supabase
+Web Development: HTML, CSS, Tailwind CSS, React.js, Next.js, Prisma, Postman, Node.js, Express.js, RESTful APIs
+DevOps/Cloud: Git, GitHub, GCP, Cloudflare
+
+Experience
+
+KIITE-Cell, Bhubaneswar, Odisha  Sep 2024 - Present
+Web Development Intern
+
+* Built a course dashboard with MERN Stack, improving onboarding efficiency and reducing user setup time from 15 to 10 minutes.
+* Integrated React.js frontend with Node.js/MongoDB backend and Google Sheet API, automating leaderboard updates and cutting manual data entry by 40%.
+* Optimized application performance by debugging and reducing load times, enhancing user experience for 100+ active users.
+
+Banao Technologies, Remote  2024 - Present
+Full Stack Developer
+
+* Developed custom UI components with Liquid code, boosting page responsiveness by 25% across 10+ client projects.
+* Fixed 15+ UI bugs, improving system uptime by 20% and enhancing code quality for seamless deployments.
+* Added scalable features using Node.js and React.js, increasing application capacity to handle 50% more concurrent users.
+
+Education
+
+KIIT University, Bhubaneswar, Odisha
+B.Tech in Computer Science and Engineering
+Expected Graduation: June 2026
+CGPA: 8.00
+
+Projects
+
+ToDoAgent  2023
+* Developed a prompt-based task assignment tool with MERN Stack.
+* Working on WhatsApp/email notifications using Node.js for real-time updates on assigned tasks.
+* Deployed on Vercel for scalability (todoagent.vercel.app)
+
+NoteNinja  2024
+* Built a fast UI with React.js and backend with Node.js.
+* Designed for text/audio summarization with optimized processing.
+* Accessible at note-audio-ninja.vercel.app
+
+EventEase  2024
+* Developed an event platform with Vite/React and Tailwind CSS.
+* Ensured responsive frontend design for better user experience.
+* Live at eventease-frontend.pages.dev
+
+E-Cell Cohort Website  2024
+* Integrated MERN Stack with real-time updates, increasing engagement by 20%.
+* Deployed at cohort.vercel.app
+
+Activities
+
+National Level Basketball Player
+* Represented state and college at national-level competitions.
+
+Smart India Hackathon (SIH) 2024  2024
+* Selected among the top 50 teams from my College
