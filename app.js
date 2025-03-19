@@ -40,6 +40,7 @@ app.post("/job_form", async (req, res) => {
 });
 // API endpoint for uploading resume
 app.post("/upload", upload.single("resume"), async (req, res) => {
+  console.log("hittts")
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
   }
