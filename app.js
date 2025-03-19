@@ -40,59 +40,25 @@ app.post("/job_form", async (req, res) => {
 });
 // API endpoint for uploading resume
 app.post("/upload", upload.single("resume"), async (req, res) => {
+  console.log("hittts")
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
   }
 
   try {
-    const fileExt = path.extname(req.file.originalname).toLowerCase();
-    console.log(`Processing file with extension: ${fileExt}`);
-
-    // Validate file extension
-    if (!['.pdf', '.docx'].includes(fileExt)) {
-      await fs.unlink(req.file.path); // Clean up the uploaded file
-      return res.status(400).json({ 
-        error: "Unsupported file format. Please upload PDF or Word documents." 
-      });
-    }
-
+    const fileExt = path.extname(req.file.originalname);
     const newFilePath = `${req.file.path}${fileExt}`;
-    console.log(`Renaming file to: ${newFilePath}`);
 
     await fs.rename(req.file.path, newFilePath);
 
-    console.log("Processing resume...");
     const extractedText = await processResume(newFilePath);
 
-    if (extractedText.startsWith("Error:")) {
-      await fs.unlink(newFilePath); // Clean up the file
-      return res.status(400).json({ error: extractedText });
-    }
-
-    console.log("Writing extracted text to output.txt");
     await fs.writeFile("output.txt", extractedText);
-
-    console.log("Formatting data...");
+    // Delete file after processing
     const formattedData = await formatData(extractedText);
-
-    // Clean up the uploaded file
-    await fs.unlink(newFilePath);
-
     res.json({ formattedData });
   } catch (error) {
-    console.error("Error processing resume:", error);
-    // Clean up any uploaded files in case of error
-    try {
-      if (req.file && req.file.path) {
-        await fs.unlink(req.file.path);
-      }
-    } catch (cleanupError) {
-      console.error("Error cleaning up file:", cleanupError);
-    }
-    res.status(500).json({ 
-      error: error.message || "Error processing resume",
-      details: error.toString()
-    });
+    res.status(500).json({ error: error.message || "Error processing resume" });
   }
 });
 //API endpoint for processing resume Data with fields
