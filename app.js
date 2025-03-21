@@ -8,6 +8,8 @@ import { captureGoogleFormScreenshot } from "./scripts/takeFormSnap.js";
 import processScreenshot from "./scripts/getFormFields.js";
 import { processResumeDataWithRequiredField } from "./scripts/processJobFieldsAndResumeData.js";
 import { atsScore } from "./scripts/atsScore.js";
+import execDocs from "./middleware/exeDocs.js";
+import getJobLink from "./scripts/getJobFormLink.js";
 const app = express();
 const port = 3000;
 // Middleware for handling JSON data
@@ -48,6 +50,7 @@ app.post("/upload", upload.single("resume"), async (req, res) => {
   try {
     const fileExt = path.extname(req.file.originalname);
     const newFilePath = `${req.file.path}${fileExt}`;
+    console.log(newFilePath)
 
     await fs.rename(req.file.path, newFilePath);
 
@@ -55,16 +58,46 @@ app.post("/upload", upload.single("resume"), async (req, res) => {
 
     await fs.writeFile("output.txt", extractedText);
     // Delete file after processing
-    const formattedData = await formatData(extractedText);
+    const formattedData = await formatData(extractedText,"resumeData.txt");
     res.json({ formattedData });
   } catch (error) {
     res.status(500).json({ error: error.message || "Error processing resume" });
   }
 });
+
+//API Endpoint for handling job details pdf from the college
+app.post("/uploadDoc", upload.single("jobDoc"), async (req, res) => {
+  console.log("hittts")
+  if (!req.file) {
+    return res.status(400).json({ error: "No file uploaded" });
+  }
+
+  try {
+    const fileExt = path.extname(req.file.originalname);
+    const newFilePath = `${req.file.path}${fileExt}`;
+
+    await fs.rename(req.file.path, newFilePath);
+
+    const extractedText = await execDocs(newFilePath);
+
+    await fs.writeFile("rawDocs.txt", extractedText);
+    // Delete file after processing
+    const formattedDocsData = await formatData(extractedText,"docsData.txt");
+
+    res.json({ formattedDocsData });
+  } catch (error) {
+    console.log("Error in the try block")
+    res.status(500).json({ error: error.message || "Error processing resume" });
+  }
+});
 //API endpoint for processing resume Data with fields
 app.post("/processData",processResumeDataWithRequiredField);
+
 //API endpoint for calculating the ATS score
 app.post("/atsScore",atsScore);
+
+//API endpoint for extracting job links from the job description
+app.get("/getJobLink",getJobLink)
 // Start the server
 app.listen(port, () =>
   console.log(`Server running on http://localhost:${port}`)
